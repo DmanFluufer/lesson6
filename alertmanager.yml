@@ -20,9 +20,9 @@ route:
 receivers:
   - name: telegram
     telegram_configs:
-    - chat_id: 368844930
+    - chat_id: <chat_id>
       parse_mode: 'Markdown'
-      bot_token: '7295339330:AAG9vm-Zm1M0WtQh66HbRyVDDFK6aOP6wzA'
+      bot_token: '<token>'
 
   - name: email
     email_configs:
