@@ -1,0 +1,30 @@
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: 'smtp.mysmtp.com:587'
+  smtp_from: 'alerts@mysmtp.com'
+  smtp_auth_username: 'myuser'
+  smtp_auth_password: 'mypassword'
+
+route:
+  group_by: ['alertname', 'severity']
+  repeat_interval: 1h
+  receiver: 'telegram'
+
+  routes:
+    - receiver: 'email'
+      match:
+        alertname: 'HostDown'
+      group_wait: 30s
+      group_interval: 5m
+
+receivers:
+  - name: telegram
+    telegram_configs:
+    - chat_id: 368844930
+      parse_mode: 'Markdown'
+      bot_token: '7295339330:AAG9vm-Zm1M0WtQh66HbRyVDDFK6aOP6wzA'
+
+  - name: email
+    email_configs:
+      - to: 'support@mysmtp.com'
+        send_resolved: true

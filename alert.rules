@@ -1,0 +1,21 @@
+groups:
+- name: disk_alerts
+  rules:
+  - alert: DiskSpaceUsageHigh
+    expr: (node_filesystem_avail_bytes{mountpoint="/usr/protei/data"} / node_filesystem_size_bytes{mountpoint="/usr/protei/data"}) * 100 < 10
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "High disk utilization on {{ $labels.instance }}"
+
+- name: host_availability
+  rules:
+  - alert: HostDown
+    expr: up{job="pcrf_node_exporter_centos", instance="192.168.110.120:9100"} == 0
+    for: 5m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Host {{ $labels.instance }} is down"
+      description: "The host {{ $labels.instance }} is not reachable for more than 5 minutes."
